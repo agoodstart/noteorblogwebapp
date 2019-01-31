@@ -1,0 +1,21 @@
+<div class='navbar'>
+<ul>
+     <li></li>
+     <li></li>
+     <li></li>
+</ul>
+<input type="text" name="search" value="" placeholder="Search for users or notes">
+<select id='search-by'>
+     <option value="Users">Users</option>
+     <option value="Notes">Notes</option>
+</select>
+</div>
+<h1>Dashboard</h1>
+<form>
+<button type="submit" formmethod="GET" formaction="/note/create" class="btn btn-primary brtn-block">Create a note</button>
+</form>
+
+<% include ./partials/allNotes %> 
+
+
+<a href="/users/logout">logout</a>

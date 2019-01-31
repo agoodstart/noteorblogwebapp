@@ -1,0 +1,9 @@
+<% if (allNotes) { %>
+  <% allNotes.forEach(note => { %>
+  <div class="<%= note.noteTitle %>">
+  <a href="/note/<%= note._id %>" class="bigger"><%= note.noteTitle %></a>
+  <button type="submit" class="AJAXRequest" name="<%=note._id %>" formaction="/dashboard/getnote/<%= note._id %>">Open here</button>
+  <button type="submit" formaction="/note/<%= note._id %>">Open in new window</button>
+  </div>
+  <% }) %>
+<% } %>

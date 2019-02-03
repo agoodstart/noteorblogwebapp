@@ -72,3 +72,19 @@ function DOMUpdate(res, thisDiv, url, oldForm, noteTitle, anchor) {
       updateButton.form = form;
     });
 }
+
+const selection = document.getElementById("search-by");
+const searchButton = document.getElementById("searchButton");
+const searchInput = document.getElementById("searchInput");
+const searchForm = searchButton.addEventListener("click", searchData);
+
+function searchData(e) {
+  e.preventDefault();
+  let searchBy = selection.value;
+  let searchValue = searchInput.value;
+
+  const url = `/search?searchValue=${searchValue}&searchBy=${searchBy}`;
+
+  location.assign(url);
+}
+// console.log(searchForm);

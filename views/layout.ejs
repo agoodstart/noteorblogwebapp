@@ -8,6 +8,23 @@
     <title>express</title>
 </head>
 <body>
+
+<div class='navbar'>
+     <ul>
+          <li></li>
+          <li></li>
+          <li>
+               <form id='searchForm' method="GET">
+                    <input type="text" id="searchInput" name="search" value="" placeholder="Search for users or notes" />
+                    <select id='search-by'>
+                         <option value="User">Users</option>
+                         <option value="Note">Notes</option>
+                    </select>
+                    <button id="searchButton" type="submit">Search</button> 
+               </form>
+          </li>
+     </ul>
+</div>
     <%- body %> 
     <%# <script src="/javascripts/getData.js"></script> %>
     <script src="/javascripts/fetch.js"></script>

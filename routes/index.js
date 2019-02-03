@@ -3,7 +3,7 @@ var router = express.Router();
 const { ensureAuthenticated } = require("../middleware/auth");
 const User = require("./../models/User");
 const Note = require("./../models/Note");
-const mongoose = require("mongoose");
+const db = require("./../config/db");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
@@ -14,6 +14,34 @@ router.get("/dashboard", ensureAuthenticated, (req, res, next) => {
   res.render("dashboard", {
     allNotes: req.user.notes
   });
+});
+
+router.get("/search", (req, res, next) => {
+  const { searchValue, searchBy } = req.query;
+
+  // selecting the whole database to query on,
+  // then use the dynamic searchBy value to search through the correct model
+
+  db.mongoose
+    .model(searchBy)
+    .find({
+      $or: [
+        { noteTitle: { $regex: RegExp(`${searchValue}*`) } },
+        { name: { $regex: RegExp(`${searchValue}*`) } }
+      ]
+    })
+    .then(
+      result => {
+        // console.log(result);
+        res.render("search", {
+          searchResults: result,
+          searchFilter: searchBy
+        });
+      },
+      e => {
+        console.log(e);
+      }
+    );
 });
 
 module.exports = router;

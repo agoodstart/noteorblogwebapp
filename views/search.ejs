@@ -1,0 +1,15 @@
+<h1>Your searched for: <%= searchFilter %>s </h1>
+
+<% if (searchResults) { %>
+ <% searchResults.forEach(result => { %>
+  <% if (result.name) { %>
+  <div>
+    <h1> <%= result.name %> </h1>
+  </div>
+  <% } else if(result.noteTitle) { %>
+  <div>
+    <h1> <%= result.noteTitle %> </h1>      
+  </div>
+  <% } %>
+ <% }) %>
+<% } %>

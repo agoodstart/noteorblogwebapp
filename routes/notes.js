@@ -17,13 +17,11 @@ router.post("/note/create", (req, res, next) => {
   const now = new moment().format("HHmmss");
   const user = req.user;
   const { noteTitle, noteBody } = req.body;
-  // const URL = `${user.name}/${noteTitle} ${now}`.replace(/ /g, "_");
 
   const note = new Note({
     author: user._id,
     noteTitle,
     noteBody
-    // URL
   });
 
   note.save().then(note => {
@@ -83,57 +81,3 @@ router.delete("/note/:id", (req, res, next) => {
 });
 
 module.exports = router;
-
-// router.get("/note/:username/:notetitle", (req, res, next) => {
-//   const URL = `${req.params.username}/${req.params.notetitle}`;
-
-//   Note.findOne({ URL }).then(note => {
-//     const { noteTitle, noteBody, URL } = note;
-
-//     res.render("updateNote", {
-//       noteTitle,
-//       noteBody,
-//       URL
-//     });
-//   });
-// });
-
-// router.put("/note/:username/:notetitle", (req, res, next) => {
-//   const URL = `${req.params.username}/${req.params.notetitle}`;
-//   const now = new moment().format("HHmmss");
-
-//   const { noteTitle, noteBody } = req.body;
-
-//   Note.findOneAndUpdate(
-//     { URL },
-//     {
-//       $set: {
-//         noteTitle,
-//         noteBody,
-//         URL: `${req.params.username}/${noteTitle} ${now}`.replace(/ /g, "_")
-//       }
-//     },
-//     {
-//       new: true
-//     }
-//   ).then(note => {
-//     res.redirect("/dashboard");
-//   });
-// });
-
-// router.delete("/note/:username/:notetitle", (req, res, next) => {
-//   const URL = `${req.params.username}/${req.params.notetitle}`;
-
-//   Note.findOne({ URL }, (err, model) => {
-//     if (err) {
-//       return;
-//     }
-
-//     model.remove(err => {
-//       if (err) {
-//         console.log(err);
-//       }
-//     });
-//   });
-//   res.redirect("/dashboard");
-// });

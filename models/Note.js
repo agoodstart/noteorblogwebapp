@@ -6,7 +6,8 @@ const moment = require("moment");
 const NoteSchema = new mongoose.Schema({
   author: {
     type: Schema.Types.ObjectId,
-    ref: "User"
+    ref: "User",
+    autopopulate: true
   },
   noteTitle: {
     type: String,
@@ -55,6 +56,11 @@ NoteSchema.pre("remove", function(next) {
     })
     .catch(e => console.log(e));
 });
+
+// WITHOUT autopopulate, author would only reference the id.
+// WITH autopopulate, author will refernce the entire document.
+// Which will help later on(in case you want to loop through author names)
+NoteSchema.plugin(require("mongoose-autopopulate"));
 
 const Note = mongoose.model("Note", NoteSchema);
 

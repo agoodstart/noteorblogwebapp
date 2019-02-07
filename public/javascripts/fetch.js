@@ -7,7 +7,8 @@ buttons.forEach(button => {
 });
 
 // eventlistener get data;
-function getData(e) {
+async function getData(e) {
+  console.log(e.target);
   const _id = e.target.name;
   const thisDiv = e.target.parentNode;
   const url = `/dashboard/note/${_id}`;
@@ -15,10 +16,14 @@ function getData(e) {
     method: "GET",
     headers: {
       "Content-type": "text/xml"
-    }
+    },
+    mode: "cors"
   });
 
-  fetch(request).then(res => DOMUpdate(res, thisDiv, url));
+  await fetch(request).then(res => DOMUpdate(res, thisDiv, url));
+  e.target.textContent = "Close";
+  e.target.removeEventListener("click", getData);
+  e.target.addEventListener("click", closeForm);
 }
 
 const updateRequest = e => {
@@ -73,18 +78,10 @@ function DOMUpdate(res, thisDiv, url, oldForm, noteTitle, anchor) {
     });
 }
 
-const selection = document.getElementById("search-by");
-const searchButton = document.getElementById("searchButton");
-const searchInput = document.getElementById("searchInput");
-const searchForm = searchButton.addEventListener("click", searchData);
-
-function searchData(e) {
-  e.preventDefault();
-  let searchBy = selection.value;
-  let searchValue = searchInput.value;
-
-  const url = `/search?searchValue=${searchValue}&searchBy=${searchBy}`;
-
-  location.assign(url);
+function closeForm(e) {
+  const thisForm = document.querySelector(".AJAXForm");
+  thisForm.remove();
+  e.target.removeEventListener("click", closeForm);
+  e.target.textContent = "Open here";
+  e.target.addEventListener("click", getData);
 }
-// console.log(searchForm);

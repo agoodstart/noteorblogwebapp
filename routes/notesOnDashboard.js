@@ -6,28 +6,31 @@ const Note = require("./../models/Note");
 const { ObjectID } = require("mongodb");
 const moment = require("moment");
 
-router.get("/note/:id", (req, res, next) => {
+router.get("/note/:id", async (req, res, next) => {
   const _id = req.params.id;
 
-  Note.findOne({ _id }).then(note => {
+  await Note.findOne({ _id }).then(note => {
     const { noteTitle, noteBody, _id } = note;
+    console.log("Url: " + req.originalUrl);
 
-    res.render("updateNoteOnDashboard", {
+    res.render("Note", {
       noteTitle,
       noteBody,
-      _id
+      _id,
+      URL: "/dashboard/note/"
     });
   });
 });
 
-router.post("/note/:id", (req, res, next) => {
+router.post("/note/:id", async (req, res, next) => {
+  console.log(req.originalUrl);
   const _id = req.params.id;
   console.log(req.body);
   // console.log(req);
 
   const { noteTitle, noteBody } = req.body;
 
-  Note.findByIdAndUpdate(
+  await Note.findByIdAndUpdate(
     _id,
     {
       $set: {
@@ -40,10 +43,11 @@ router.post("/note/:id", (req, res, next) => {
     }
   ).then(note => {
     res.set("Content-Type", "text/xml");
-    res.render("updateNoteOnDashboard", {
+    res.render("Note", {
       noteTitle,
       noteBody,
-      _id
+      _id,
+      URL: "/dashboard/note/"
     });
   });
 });

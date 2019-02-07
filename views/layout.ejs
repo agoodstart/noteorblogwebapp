@@ -14,9 +14,9 @@
           <li></li>
           <li></li>
           <li>
-               <form id='searchForm' method="GET">
-                    <input type="text" id="searchInput" name="search" value="" placeholder="Search for users or notes" />
-                    <select id='search-by'>
+               <form id='searchForm' method="POST" action="/search">
+                    <input type="text" id="searchInput" name="searchValue" value="" placeholder="Search for users or notes" />
+                    <select name="searchBy" id='search-by'>
                          <option value="User">Users</option>
                          <option value="Note">Notes</option>
                     </select>

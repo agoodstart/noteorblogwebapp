@@ -4,17 +4,18 @@ const { ensureAuthenticated } = require("../middleware/auth");
 const User = require("./../models/User");
 const Note = require("./../models/Note");
 const { ObjectID } = require("mongodb");
-const moment = require("moment");
 
 router.get("/note/create", (req, res, next) => {
-  res.render("createNote", {
+  // url = note/create
+  console.log("Url: " + req.originalUrl);
+  res.render("Note", {
     noteTitle: "",
-    noteBody: ""
+    noteBody: "",
+    URL: req.originalUrl
   });
 });
 
 router.post("/note/create", (req, res, next) => {
-  const now = new moment().format("HHmmss");
   const user = req.user;
   const { noteTitle, noteBody } = req.body;
 
@@ -33,12 +34,14 @@ router.get("/note/:id", (req, res, next) => {
   const _id = req.params.id;
 
   Note.findOne({ _id }).then(note => {
+    console.log("Url: " + req.originalUrl);
     const { noteTitle, noteBody, _id } = note;
 
-    res.render("updateNote", {
+    res.render("Note", {
       noteTitle,
       noteBody,
-      _id
+      _id,
+      URL: "/note/"
     });
   });
 });
@@ -66,7 +69,7 @@ router.put("/note/:id", (req, res, next) => {
 router.delete("/note/:id", (req, res, next) => {
   const noteId = req.params.id;
 
-  Note.findOne({ _id: noteId }, (err, model) => {
+  Note.findOne({ _id: noteId }, {}, { autopopulate: false }, (err, model) => {
     if (err) {
       return;
     }

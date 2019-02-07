@@ -16,8 +16,10 @@ router.get("/dashboard", ensureAuthenticated, (req, res, next) => {
   });
 });
 
-router.get("/search", (req, res, next) => {
-  const { searchValue, searchBy } = req.query;
+router.post("/search", (req, res, next) => {
+  console.log(req.body.searchValue);
+  console.log(req.body.searchBy);
+  const { searchValue, searchBy } = req.body;
 
   // selecting the whole database to query on,
   // then use the dynamic searchBy value to search through the correct model
@@ -32,7 +34,7 @@ router.get("/search", (req, res, next) => {
     })
     .then(
       result => {
-        // console.log(result);
+        console.log(result);
         res.render("search", {
           searchResults: result,
           searchFilter: searchBy

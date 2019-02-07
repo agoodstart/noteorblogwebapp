@@ -8,7 +8,9 @@
   </div>
   <% } else if(result.noteTitle) { %>
   <div>
-    <h1> <%= result.noteTitle %> </h1>      
+    <%# Thanks to autopopulate, we can reference the author name!! %> 
+    <p>Title: <%= result.noteTitle %></p>
+    <p>Author: <%= result.author.name %></p>
   </div>
   <% } %>
  <% }) %>
